@@ -2,13 +2,16 @@
 
 namespace $NAMESPACE_CONTROLLER$;
 
+use $NAMESPACE_DATATABLES$\$MODEL_NAME$DataTable;
+use $NAMESPACE_REQUEST$;
+use Illuminate\Http\Request;
 use $NAMESPACE_REQUEST$\Create$MODEL_NAME$Request;
 use $NAMESPACE_REQUEST$\Update$MODEL_NAME$Request;
 use $NAMESPACE_REPOSITORY$\$MODEL_NAME$Repository;
-use $NAMESPACE_APP$\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
 use Flash;
+use $NAMESPACE_APP$\Http\Controllers\AppBaseController;
 use Response;
+use Datatables;
 
 class $MODEL_NAME$Controller extends AppBaseController
 {
@@ -24,15 +27,15 @@ class $MODEL_NAME$Controller extends AppBaseController
      * Display a listing of the $MODEL_NAME$.
      *
      * @param Request $request
-     *
      * @return Response
      */
     public function index(Request $request)
     {
-        $$MODEL_NAME_PLURAL_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->$RENDER_TYPE$;
-
-        return view('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.index')
-            ->with('$MODEL_NAME_PLURAL_CAMEL$', $$MODEL_NAME_PLURAL_CAMEL$);
+        if ($request->ajax()) {
+            return Datatables::of((new $MODEL_NAME$DataTable())->get())->make(true);
+        }
+    
+        return view('$VIEW_PREFIX$$MODEL_NAME_PLURAL_SNAKE$.index');
     }
 
     /**
@@ -66,7 +69,7 @@ class $MODEL_NAME$Controller extends AppBaseController
     /**
      * Display the specified $MODEL_NAME$.
      *
-     * @param int $id
+     * @param  int $id
      *
      * @return Response
      */
@@ -86,7 +89,7 @@ class $MODEL_NAME$Controller extends AppBaseController
     /**
      * Show the form for editing the specified $MODEL_NAME$.
      *
-     * @param int $id
+     * @param  int $id
      *
      * @return Response
      */
@@ -106,7 +109,7 @@ class $MODEL_NAME$Controller extends AppBaseController
     /**
      * Update the specified $MODEL_NAME$ in storage.
      *
-     * @param int $id
+     * @param  int              $id
      * @param Update$MODEL_NAME$Request $request
      *
      * @return Response
@@ -131,9 +134,7 @@ class $MODEL_NAME$Controller extends AppBaseController
     /**
      * Remove the specified $MODEL_NAME$ from storage.
      *
-     * @param int $id
-     *
-     * @throws \Exception
+     * @param  int $id
      *
      * @return Response
      */
@@ -141,16 +142,8 @@ class $MODEL_NAME$Controller extends AppBaseController
     {
         $$MODEL_NAME_CAMEL$ = $this->$MODEL_NAME_CAMEL$Repository->find($id);
 
-        if (empty($$MODEL_NAME_CAMEL$)) {
-            Flash::error('$MODEL_NAME_HUMAN$ not found');
+        $$MODEL_NAME_CAMEL$->delete();
 
-            return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
-        }
-
-        $this->$MODEL_NAME_CAMEL$Repository->delete($id);
-
-        Flash::success('$MODEL_NAME_HUMAN$ deleted successfully.');
-
-        return redirect(route('$ROUTE_NAMED_PREFIX$$MODEL_NAME_PLURAL_CAMEL$.index'));
+        return $this->sendSuccess('$MODEL_NAME_HUMAN$ deleted successfully.');
     }
 }

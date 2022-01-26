@@ -115,7 +115,7 @@ if (!function_exists('get_templates_package_path')) {
     function get_templates_package_path($templateType)
     {
         if (strpos($templateType, '/') === false) {
-            $templateType = base_path('vendor/budianto24/').$templateType;
+            $templateType = base_path('vendor/infyomlabs/').$templateType;
         }
 
         return $templateType;

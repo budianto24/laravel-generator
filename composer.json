@@ -1,21 +1,35 @@
 {
-    "name": "budianto24/laravel-generator",
+    "name": "infyomlabs/laravel-generator",
     "type": "library",
-    "description": "Laravel Generator",
+    "description": "InfyOm Laravel Generator",
+    "keywords": [
+        "laravel",
+        "api",
+        "model",
+        "request",
+        "migration",
+        "model",
+        "crud",
+        "repository",
+        "view",
+        "test",
+        "generator",
+        "swagger"
+    ],
     "license": "MIT",
     "authors": [
         {
-            "name": "Budianto",
-            "email": "budiianto24@gmail.com"
+            "name": "Mitul Golakiya",
+            "email": "me@mitul.me"
         }
     ],
     "require": {
-        "php": "^7.3",
+        "php": "^7.3|^8.0",
         "illuminate/support": "^8.0",
         "laracasts/flash": "^3.2"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.0",
+        "phpunit/phpunit": "^9.0|^9.3.3",
         "mockery/mockery": "^1.3.1"
     },
     "autoload": {
@@ -37,5 +51,11 @@
                 "\\InfyOm\\Generator\\InfyOmGeneratorServiceProvider"
             ]
         }
-    }    
+    },
+    "funding": [
+        {
+            "type": "opencollective",
+            "url": "https://opencollective.com/infyomlabs"
+        }
+    ]
 }
